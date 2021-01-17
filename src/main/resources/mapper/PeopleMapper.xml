@@ -33,9 +33,6 @@
         from people where id=#{id}
     </select>
 
-    <select id="selectName" resultType="java.lang.String">
-        select  name from  gradutation.admin where name=#{name}
-    </select>
 
     <select id="selectByName" resultMap="BaseResultMap">
         select <include refid="base_column"/> from people where  name like concat('%',#{name},'%')
@@ -73,4 +70,12 @@
             #{item}
         </foreach>
     </update>
+
+    <select id="selectName" resultType="java.lang.String">
+        select  name from  gradutation.people where name=#{name}
+    </select>
+
+    <select id="passIstrue" resultType="java.lang.Integer">
+        select count(*) from gradutation.people where name=#{username} AND password=#{password}
+    </select>
 </mapper>

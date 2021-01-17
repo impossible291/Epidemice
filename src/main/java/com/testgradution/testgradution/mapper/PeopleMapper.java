@@ -3,6 +3,8 @@ package com.testgradution.testgradution.mapper;
 import com.testgradution.testgradution.domain.People;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
+
 import java.util.List;
 
 @Repository
@@ -35,4 +37,9 @@ public interface PeopleMapper {
     //删除选中用户
     public  int deleteAll();
 
+    //验证用户是否存在
+    public String selectName(String name);
+
+    //验证用户密码是否正确
+    public  int passIstrue(String username,String password);
 }

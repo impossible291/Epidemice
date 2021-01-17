@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -170,6 +171,37 @@ public class PeopleController {
        return  jsonObject;
     }
 
+    /**
+     * 患者登录验证用户名和密码
+     */
+    @RequestMapping(value = "/check",method = RequestMethod.POST)
+    public Object check(HttpServletRequest request, HttpSession session){
+        JSONObject jsonObject=new JSONObject();
+        boolean flag=false;
+        String username=request.getParameter("name");
+        String password=request.getParameter("password");
+        String name=peopleMapper.selectName(username);
+        if(name==null){
+            jsonObject.put("code",999);
+            jsonObject.put("msg","用户名不存在");
+            return jsonObject;
+        }else{
+            int ans=peopleMapper.passIstrue(username,password);
+            if(ans>=1){
+                flag=true;
+            }
+            if(flag){
+                jsonObject.put("code",1);
+                jsonObject.put("msg","登陆成功");
+                session.setAttribute("username",username);
+                return jsonObject;
+            }else{
+                jsonObject.put("code",-1);
+                jsonObject.put("msg","用户名或者密码错误");
+            }
+        }
+        return  jsonObject;
+    }
     /**
      * 批量删除
      * @return

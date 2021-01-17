@@ -25,7 +25,6 @@ public class Intpertor implements HandlerInterceptor {
             Object user=request.getSession().getAttribute("username");
             if(user==null){
                 request.getSession().setAttribute("msg","请先登录");
-
                 return false;
             }
 
