@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.testgradution.testgradution.mapper.InformationMapper">
+    <resultMap id="BaseResultMap" type="com.testgradution.testgradution.domain.Information" >
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="card_no"  jdbcType="VARCHAR" property="cardNo"/>
+        <result column="sffl"  jdbcType="VARCHAR" property="sffl"/>
+        <result column="sfxm"  jdbcType="VARCHAR" property="sfxm"/>
+        <result column="radio"  jdbcType="VARCHAR" property="radio"/>
+        <result column="temperature"  jdbcType="VARCHAR" property="temperature"/>
+        <result column="healthy_status"  jdbcType="VARCHAR" property="healthyStatus"/>
+        <result column="demo"  jdbcType="VARCHAR" property="demo"/>
+    </resultMap>
+    <sql id="base_cloumn">
+        id,name,card_no,sffl,sfxm,radio,temperature,healthy_status,demo
+    </sql>
+
+    <insert id="saveInformation" parameterType="com.testgradution.testgradution.domain.Information">
+        insert  into gradutation.information(name,card_no,sffl,sfxm,radio,temperature,healthy_status,demo)
+        values
+        (#{name},#{card_no},#{sffl},#{sfxm},#{radio},#{temperature},#{healthyStatus},#{demo})
+    </insert>
+
+
+</mapper>

@@ -24,7 +24,7 @@ public class AdminController {
     public PeopleMapper peopleMapper;
 
 
-    @RequestMapping("/insertAdmin")
+    @RequestMapping( "/insertAdmin")
     public boolean  inserAdmin(@RequestBody Admin admin){
         boolean flag=false;
         /**
@@ -47,7 +47,7 @@ public class AdminController {
      * 判断是否登陆成功
      */
     public  Object  loginStatus(HttpServletRequest request, HttpSession session){
-        JSONObject jsonObject=new JSONObject();
+            JSONObject jsonObject=new JSONObject();
         boolean flag=false;
         String username=request.getParameter("name");
         String password=request.getParameter("password");

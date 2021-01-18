@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = {"http://localhost:8080"},allowedHeaders ="*")
+@CrossOrigin(origins = {"http://localhost:8080","null"})
 @RestController
 @RequestMapping("/people")
 public class PeopleController {
@@ -84,7 +84,7 @@ public class PeopleController {
     /**
      * 模糊查询，根据用户姓名模糊查询
      */
-    @RequestMapping(value = "selectByName",method = RequestMethod.GET)
+    @RequestMapping(value = "/selectByName",method = RequestMethod.GET)
     public Object selectByName(HttpServletRequest request){
         JSONObject jsonObject=new JSONObject();
         String name=request.getParameter("name");
