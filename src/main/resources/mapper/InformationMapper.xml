@@ -21,8 +21,12 @@
     <insert id="saveInformation" parameterType="com.testgradution.testgradution.domain.Information">
         insert  into gradutation.information(name,card_no,sffl,sfxm,radio,temperature,healthy_status,demo)
         values
-        (#{name},#{card_no},#{sffl},#{sfxm},#{radio},#{temperature},#{healthyStatus},#{demo})
+        (#{name},#{cardNo},#{sffl},#{sfxm},#{radio},#{temperature},#{healthyStatus},#{demo})
     </insert>
 
+    <select id="selectByNameAndSendstatus" resultMap="BaseResultMap">
+        select <include refid="base_cloumn"/> from gradutation.information
+        where  name=#{name} and send_status=#{sendStatus}
+    </select>
 
 </mapper>

@@ -24,7 +24,7 @@ public class AdminController {
     public PeopleMapper peopleMapper;
 
 
-    @RequestMapping( "/insertAdmin")
+        @RequestMapping( "/insertAdmin")
     public boolean  inserAdmin(@RequestBody Admin admin){
         boolean flag=false;
         /**

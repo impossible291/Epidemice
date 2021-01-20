@@ -4,6 +4,7 @@ package com.testgradution.testgradution.domain;
  * 信息录入实体类
  */
 public class Information {
+    private  long id;
     //姓名
     private  String name;
 
@@ -101,6 +102,14 @@ public class Information {
 
     public void setDemo(String demo) {
         this.demo = demo;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }
 
