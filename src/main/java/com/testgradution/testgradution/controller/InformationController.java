@@ -1,15 +1,14 @@
 package com.testgradution.testgradution.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.testgradution.testgradution.domain.Information;
 import com.testgradution.testgradution.service.InformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.relational.core.sql.In;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -69,6 +68,26 @@ public class InformationController {
         }
         return  jsonObject;
     }
+
+    /**
+     * 更新发送状态,点击发送之后更新发送状态为1
+     * @return
+     */
+    @RequestMapping("/updateSendStatus")
+    public  JSONObject updateSendStatus(@RequestParam("id") Long id){
+        JSONObject jsonObject=new JSONObject();
+        try {
+            if(id==null){
+                throw new RuntimeException("传入id为空");
+            }
+            informationService.updateSendStatus(id);
+            jsonObject.put("code",200);
+            jsonObject.put("msg","发送成功");
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        return  jsonObject;
+    }
     public Information setInformation(HttpServletRequest httpServletRequest){
         Information information=new Information();
         information.setCardNo(httpServletRequest.getParameter("cardNo"));
@@ -79,6 +98,7 @@ public class InformationController {
         information.setSffl(httpServletRequest.getParameter("sffl"));
         information.setSfxm(httpServletRequest.getParameter("sfxm"));
         information.setTemperature(httpServletRequest.getParameter("temperature"));
+        information.setSendStatus(httpServletRequest.getParameter("sendStatus"));
         return  information;
     }
 }

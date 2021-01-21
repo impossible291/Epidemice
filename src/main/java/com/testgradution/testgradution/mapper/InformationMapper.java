@@ -13,4 +13,6 @@ public interface InformationMapper {
     public int saveInformation(Information information);
     //信息查询
     public List<Information> selectByNameAndSendstatus(String name,String sendStatus);
+
+    public void  updateSendStatus(Long id);
 }

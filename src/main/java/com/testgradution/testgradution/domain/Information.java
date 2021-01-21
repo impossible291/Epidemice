@@ -32,6 +32,9 @@ public class Information {
     //备注
     private String demo;
 
+    //发送状态
+    private  String sendStatus;
+
     public String getName() {
         return name;
     }
@@ -110,6 +113,14 @@ public class Information {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getSendStatus() {
+        return sendStatus;
+    }
+
+    public void setSendStatus(String sendStatus) {
+        this.sendStatus = sendStatus;
     }
 }
 

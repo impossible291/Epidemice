@@ -13,4 +13,7 @@ public interface InformationService {
 
     //查询信息
     public List<Information> selectByNameAndSendstatus(String name,String sendStatus);
+
+    //更新发送状态字段值为发送
+    public void updateSendStatus(Long id);
 }

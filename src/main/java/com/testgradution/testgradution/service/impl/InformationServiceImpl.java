@@ -22,4 +22,9 @@ public class InformationServiceImpl implements InformationService {
     public List<Information> selectByNameAndSendstatus(String name, String sendStatus) {
         return informationMapper.selectByNameAndSendstatus(name,sendStatus);
     }
+
+    @Override
+    public void updateSendStatus(Long id) {
+        informationMapper.updateSendStatus(id);
+    }
 }
