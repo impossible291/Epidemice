@@ -1,5 +1,6 @@
 package com.testgradution.testgradution.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.testgradution.testgradution.domain.People;
 import com.testgradution.testgradution.mapper.PeopleMapper;
@@ -223,6 +224,42 @@ public class PeopleController {
             e.printStackTrace();
         }
         return  jsonObject;
+    }
+
+    //患者修改密码，并且判断两次密码是否一致
+    @RequestMapping("changePassword")
+    public  Object changePassword(HttpServletRequest httpServletRequest,HttpSession httpSession){
+        JSONObject jsonObject=new JSONObject();
+        String password=httpServletRequest.getParameter("password");
+        String passwordAgin=httpServletRequest.getParameter("passwordAgin");
+        String newPassword=httpServletRequest.getParameter("newPassword");
+        String name=(String)httpSession.getAttribute("username");
+        if(!password.equals(passwordAgin)){
+            jsonObject.put("msg","两次输入的密码不一致请检查");
+            return jsonObject;
+        }
+        //调用修改密码接口
+        try{
+            //调用查询接口查看旧密码是否正确
+            String old=peopleMapper.selectPassword(name);
+            if(!old.equals(password)){
+                jsonObject.put("msg","输入的旧密码不正确，请重新输入");
+                return  jsonObject;
+            }
+            int ans=peopleMapper.changePassword(newPassword);
+            if (ans>0){
+                jsonObject.put("code",200);
+                jsonObject.put("msg","密码修改成功");
+                return jsonObject;
+            }else{
+                jsonObject.put("code",200);
+                jsonObject.put("msg","修改失败");
+                return jsonObject;
+            }
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+
     }
 
     public People setPeople(HttpServletRequest request){

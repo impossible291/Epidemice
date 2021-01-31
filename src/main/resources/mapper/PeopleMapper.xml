@@ -78,4 +78,11 @@
     <select id="passIstrue" resultType="java.lang.Integer">
         select count(*) from gradutation.people where name=#{username} AND password=#{password}
     </select>
+
+    <update id="changePassword" >
+        update  gradutation.people set password=#{newPassword}
+    </update>
+    <select id="selectPassword" resultType="java.lang.String">
+        select password from gradutation.people where name=#{name}
+    </select>
 </mapper>

@@ -42,4 +42,11 @@ public interface PeopleMapper {
 
     //验证用户密码是否正确
     public  int passIstrue(String username,String password);
+
+    //修改患者密码
+    public  int changePassword(String password);
+
+    //查询旧密码
+    public  String selectPassword(String name);
+
 }
