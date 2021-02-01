@@ -6,9 +6,12 @@ import com.testgradution.testgradution.domain.People;
 import com.testgradution.testgradution.mapper.PeopleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -227,7 +230,7 @@ public class PeopleController {
     }
 
     //患者修改密码，并且判断两次密码是否一致
-    @RequestMapping("changePassword")
+    @RequestMapping("/changePassword")
     public  Object changePassword(HttpServletRequest httpServletRequest,HttpSession httpSession){
         JSONObject jsonObject=new JSONObject();
         String password=httpServletRequest.getParameter("password");
@@ -252,14 +255,56 @@ public class PeopleController {
                 jsonObject.put("msg","密码修改成功");
                 return jsonObject;
             }else{
-                jsonObject.put("code",200);
+                jsonObject.put("code",999);
                 jsonObject.put("msg","修改失败");
                 return jsonObject;
             }
         }catch (Exception e){
             throw new RuntimeException(e);
         }
+    }
 
+    @RequestMapping("/uploadPic")
+    public Object uploadPic(@RequestParam("file") MultipartFile avatorPic,@RequestParam("id") int id){
+        JSONObject jsonObject=new JSONObject();
+        if(avatorPic.isEmpty()){
+            jsonObject.put("code",999);
+            jsonObject.put("msg","上传失败");
+            return jsonObject;
+        }
+        //防止用户上传多张文件名相同的被覆盖掉的情况
+        String fileName=System.currentTimeMillis()+avatorPic.getOriginalFilename();
+        String filePath=System.getProperty("user.dir")+System.getProperty("file.separator")+"img"
+                +System.getProperty("file.separator")+"peoplePic";
+        File  file1=new File(filePath);
+        if(!file1.exists()){
+            file1.mkdir();
+        }
+        //实际的文件地址
+        File dest=new File(filePath+System.getProperty("file.separator")+fileName);
+        //存储到数据库的相对文件地址
+        String path="/img/peoplePic"+System.getProperty("file.separator")+fileName;
+        try {
+            avatorPic.transferTo(dest);
+            int ans=peopleMapper.updatePic(path,id);
+            if(ans>0){
+                jsonObject.put("code",200);
+                jsonObject.put("msg","上传成功");
+                jsonObject.put("pic",path);
+                return jsonObject;
+            }else{
+                jsonObject.put("code",999);
+                jsonObject.put("msg","上传失败");
+                return jsonObject;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            jsonObject.put("code",999);
+            jsonObject.put("msg",e.getMessage());
+            return jsonObject;
+        }finally {
+            return jsonObject;
+        }
     }
 
     public People setPeople(HttpServletRequest request){

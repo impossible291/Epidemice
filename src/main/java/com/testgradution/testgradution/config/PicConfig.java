@@ -11,8 +11,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class PicConfig implements WebMvcConfigurer {
 
     public  void addResourceHandlers(ResourceHandlerRegistry registry){
-        registry.addResourceHandler("img/peoplePic/*").addResourceLocations(
-                "file"+System.getProperty("user.dir")+System.getProperty("file.separator")+"img"
+        registry.addResourceHandler("img/peoplePic/**").addResourceLocations(
+                "file:"+System.getProperty("user.dir")+System.getProperty("file.separator")+"img"
                 +System.getProperty("file.separator")+"peoplePic"+System.getProperty("file.separator")
         );
 

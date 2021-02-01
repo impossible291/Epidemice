@@ -49,4 +49,7 @@ public interface PeopleMapper {
     //查询旧密码
     public  String selectPassword(String name);
 
+    //更改图片
+    public int updatePic(String path,int id);
+
 }

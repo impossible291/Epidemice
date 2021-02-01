@@ -85,4 +85,8 @@
     <select id="selectPassword" resultType="java.lang.String">
         select password from gradutation.people where name=#{name}
     </select>
+
+    <update id="updatePic">
+        update  people set pic=#{path} where id=#{id}
+    </update>
 </mapper>
