@@ -1,5 +1,7 @@
 package com.testgradution.testgradution.domain;
 
+import java.util.List;
+
 public class People {
     //用户id
     private int id;
@@ -14,7 +16,7 @@ public class People {
     //根据该用户输入的信息判断是高、中、低那种风险程度
     private  String risk;
     //用户性别
-    private Boolean sex;
+    private String sex;
     //用户头像字段
     private String pic;
     //用户密码
@@ -25,6 +27,8 @@ public class People {
 
     //来源地
     private  String source;
+
+    private List<Doctor> doctor;
 
     public int getId() {
         return id;
@@ -74,11 +78,11 @@ public class People {
         this.risk = risk;
     }
 
-    public Boolean getSex() {
+    public String getSex() {
         return sex;
     }
 
-    public void setSex(Boolean sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 
@@ -112,6 +116,14 @@ public class People {
 
     public void setCardNo(String cardNo) {
         this.cardNo = cardNo;
+    }
+
+    public List<Doctor> getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(List<Doctor> doctor) {
+        this.doctor = doctor;
     }
 
     public String getSource() {

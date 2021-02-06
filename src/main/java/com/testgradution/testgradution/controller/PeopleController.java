@@ -317,7 +317,7 @@ public class PeopleController {
         }
         people.setSource(request.getParameter("source"));
         people.setName(request.getParameter("name").trim());
-        people.setSex(Boolean.parseBoolean(request.getParameter("sex").trim()));
+        people.setSex(request.getParameter("sex").trim());
         people.setAdvice(request.getParameter("advice").trim());
         people.setLocaltion(request.getParameter("location").trim());
         people.setPassword(request.getParameter("password").trim());
