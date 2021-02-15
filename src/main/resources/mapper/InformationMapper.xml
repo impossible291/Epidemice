@@ -6,6 +6,7 @@
     <resultMap id="BaseResultMap" type="com.testgradution.testgradution.domain.Information" >
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="people_id" jdbcType="INTEGER" property="peopleId"/>
         <result column="card_no"  jdbcType="VARCHAR" property="cardNo"/>
         <result column="sffl"  jdbcType="VARCHAR" property="sffl"/>
         <result column="sfxm"  jdbcType="VARCHAR" property="sfxm"/>
@@ -14,24 +15,29 @@
         <result column="healthy_status"  jdbcType="VARCHAR" property="healthyStatus"/>
         <result column="demo"  jdbcType="VARCHAR" property="demo"/>
         <result column="send_status" jdbcType="VARCHAR" property="sendStatus"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="pic" jdbcType="VARCHAR" property="pic"/>
     </resultMap>
     <sql id="base_cloumn">
-        id,name,card_no,sffl,sfxm,radio,temperature,healthy_status,demo,send_status
+        id,name,card_no,sffl,sfxm,radio,temperature,healthy_status,demo,send_status,user_name,people_id,pic
     </sql>
 
     <insert id="saveInformation" parameterType="com.testgradution.testgradution.domain.Information">
-        insert  into gradutation.information(name,card_no,sffl,sfxm,radio,temperature,healthy_status,demo,send_status)
+        insert  into gradutation.information(name,card_no,sffl,sfxm,radio,temperature,healthy_status,demo,send_status,user_name,people_id,pic)
         values
-        (#{name},#{cardNo},#{sffl},#{sfxm},#{radio},#{temperature},#{healthyStatus},#{demo},#{sendStatus})
+        (#{name},#{cardNo},#{sffl},#{sfxm},#{radio},#{temperature},#{healthyStatus},#{demo},#{sendStatus},#{userName},#{peopleId},pic)
     </insert>
 
     <select id="selectByNameAndSendstatus" resultMap="BaseResultMap">
         select <include refid="base_cloumn"/> from gradutation.information
-        where  name=#{name} and send_status=#{sendStatus}
+        where  user_name=#{name} and send_status=#{sendStatus}
     </select>
 
     <update id="updateSendStatus">
-        update  gradutation.information set send_status=1 where id=#{id}
+        update  gradutation.information set send_status=1 where  id=#{id}
     </update>
 
+    <select id="selectDiease" resultMap="BaseResultMap">
+        SELECT <include refid="base_cloumn"/> from information WHERE people_id in (select people_id FROM doctor_people where doctor_id=#{id})
+    </select>
 </mapper>

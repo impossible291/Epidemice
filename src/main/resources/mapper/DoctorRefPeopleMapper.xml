@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.testgradution.testgradution.mapper.DoctorRefPeopleMapper">
+    <resultMap id="BaseResultMap" type="com.testgradution.testgradution.domain.DoctorRefPeople" >
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="people_id" jdbcType="INTEGER" property="peopleId"/>
+        <result column="doctor_id"  jdbcType="INTEGER" property="doctorId"/>
+    </resultMap>
+    <sql id="base_cloumn">
+        id,people_id,doctor_id
+    </sql>
+
+    <insert id="ref" parameterType="com.testgradution.testgradution.domain.DoctorRefPeople">
+        insert  into doctor_people(people_id,doctor_id) values (#{peopleId},#{doctorId})
+    </insert>
+
+
+
+</mapper>

@@ -27,11 +27,7 @@ public class EpidemicController {
         try{
             int ans=epidemicService.insertEpidemic(epidemic);
             //调用查询接口，根据查询出来的值给出对应的意见
-            if(epidemic.getTemperature()>37.3 && epidemic.getTemperature()<37.8){
-                advice.setTemperatureAdvice("请居家隔离");
-            }else if(epidemic.getTemperature()>37.8){
-                advice.setTemperatureAdvice("请及时就医");
-            }
+
 
             if(ans>0){
                 jsonObject.put("code",200);

@@ -18,33 +18,37 @@
         <result column="age"  jdbcType="INTEGER" property="age"/>
         <result column="sex"  jdbcType="INTEGER" property="sex"/>
         <result column="phone"  jdbcType="INTEGER" property="phone"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="pic" jdbcType="VARCHAR" property="pic"/>
+
+
     </resultMap>
 
     <sql id="baseColumn">
-        id,name,password,sex,card_no,age,hospital,introduce,ks,address,email,id_number,phone
+        id,name,password,sex,card_no,age,hospital,introduce,ks,address,email,id_number,phone,user_name,pic
     </sql>
+    <insert id="registerDoctor" parameterType="com.testgradution.testgradution.domain.Admin">
+        insert into gradutation.doctor(name,password,sex,card_no,age,hospital,introduce,ks,address,email,id_number,phone,
+        user_name,pic)
+        values (#{name},#{password},#{sex},#{cardNo},#{age},#{hospital},#{introduce},#{ks},#{address},#{email},#{idNumber},#{phone},#{userName},#{pic})
+    </insert>
     <select id="doctorLogin" resultType="java.lang.Integer">
-        select count(*) from gradutation.doctor where name=#{name} AND password=#{password}
+        select count(*) from gradutation.doctor where user_name=#{name} AND password=#{password}
     </select>
 
     <select id="selectAll" resultType="com.testgradution.testgradution.domain.Doctor">
         select <include refid="baseColumn"/> from  gradutation.doctor
     </select>
 
-    <insert id="insertAdmin" parameterType="com.testgradution.testgradution.domain.Admin">
-        insert  into gradutation.admin(name,password) values(#{name},#{password})
-    </insert>
-
-    <select id="selectAdmin" resultMap="BaseResultMap">
-        select * from admin
+    <select id="selectByIds" resultType="com.testgradution.testgradution.domain.Doctor">
+        select  <include refid="baseColumn"/> from gradutation.doctor  where id in
+        <foreach collection="list"  item="item" open="(" separator="," close=")"  >
+            #{item}
+        </foreach>
     </select>
 
-    <select id="selectName" resultType="java.lang.String">
-        select  name from  gradutation.admin where name=#{name}
-    </select>
-
-    <select id="passIstrue" resultType="java.lang.Integer">
-        select count(*) from gradutation.admin where name=#{username} AND password=#{password}
+    <select id="selectByname" resultType="com.testgradution.testgradution.domain.Doctor">
+        select  <include refid="baseColumn"/> from  doctor where user_name=#{username}
     </select>
 
 </mapper>

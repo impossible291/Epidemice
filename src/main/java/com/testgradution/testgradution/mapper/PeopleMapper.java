@@ -20,7 +20,7 @@ public interface PeopleMapper {
     public People selectByPrimaryKey(Long id);
 
     //查询所有用户
-    public List<People> selectPeoples(List<Integer> ids);
+    public List<People> selectPeoples(List<Long> ids);
 
     //根据用户名字模糊查询
     public  List<People> selectByName(String name);
@@ -51,5 +51,14 @@ public interface PeopleMapper {
 
     //更改图片
     public int updatePic(String path,int id);
+
+    //患者注册
+    public  int registerPeople(People people);
+
+    //根据患者用户名查询用户信息（用户名不能够重复）
+    public People selectByUserName(String userName);
+
+    //查询发送给医生信息的患者
+    public  List<Long>   selectDiease(Long id);
 
 }

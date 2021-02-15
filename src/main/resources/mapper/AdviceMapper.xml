@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.testgradution.testgradution.mapper.AdviceMapper">
+    <resultMap id="BaseResultMap" type="com.testgradution.testgradution.domain.Advice" >
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="doctor_id" jdbcType="INTEGER" property="doctorId"/>
+        <result column="people_id" jdbcType="INTEGER" property="peopleId"/>
+        <result column="gl"  jdbcType="VARCHAR" property="gl"/>
+        <result column="zl" jdbcType="VARCHAR" property="zl"/>
+        <result column="yw"  jdbcType="VARCHAR" property="yw"/>
+        <result column="doctor_name" jdbcType="VARCHAR" property="doctorName"/>
+        <result column="ks" jdbcType="VARCHAR" property="ks"/>
+        <result column="hospital"  jdbcType="VARCHAR" property="hospital"/>
+        <result column="age"  jdbcType="INTEGER" property="age"/>
+        <result column="pic" jdbcType="VARCHAR" property="pic"/>
+        <result column="advice" jdbcType="VARCHAR" property="advice"/>
+    </resultMap>
+
+    <sql id="baseColumn">
+        id,doctor_id,people_id,gl,zl,age,hospital,ks,yw,doctor_name,pic,advice
+    </sql>
+    <insert id="insertAdvice" parameterType="com.testgradution.testgradution.domain.Advice">
+        insert into gradutation.advice(doctor_id,people_id,gl,age,hospital,zl,ks,doctor_name,pic,yw,advice)
+        values (#{doctorId},#{peopleId},#{gl},#{age},#{hospital},#{zl},#{ks},#{doctorName},#{pic},#{yw},#{advice})
+    </insert>
+    <select id="selectByPeople" resultType="com.testgradution.testgradution.domain.Advice">
+        select  <include refid="baseColumn"/> from gradutation.advice  where people_id=#{id}
+    </select>
+
+</mapper>

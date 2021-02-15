@@ -2,6 +2,7 @@ package com.testgradution.testgradution.mapper;
 
 import com.testgradution.testgradution.domain.Information;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface InformationMapper {
     public List<Information> selectByNameAndSendstatus(String name,String sendStatus);
 
     public void  updateSendStatus(Long id);
+
+    public  List<Information> selectDiease(Long id);
 }

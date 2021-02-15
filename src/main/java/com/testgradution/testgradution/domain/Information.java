@@ -5,6 +5,10 @@ package com.testgradution.testgradution.domain;
  */
 public class Information {
     private  long id;
+    //患者id
+    private  Long peopleId;
+    //用户名
+    private String userName;
     //姓名
     private  String name;
 
@@ -34,6 +38,9 @@ public class Information {
 
     //发送状态
     private  String sendStatus;
+
+    //患者头像
+    private  String pic;
 
     public String getName() {
         return name;
@@ -121,6 +128,30 @@ public class Information {
 
     public void setSendStatus(String sendStatus) {
         this.sendStatus = sendStatus;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Long getPeopleId() {
+        return peopleId;
+    }
+
+    public void setPeopleId(Long peopleId) {
+        this.peopleId = peopleId;
+    }
+
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
     }
 }
 

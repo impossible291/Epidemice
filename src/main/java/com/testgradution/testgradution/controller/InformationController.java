@@ -2,15 +2,23 @@ package com.testgradution.testgradution.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.testgradution.testgradution.domain.Doctor;
+import com.testgradution.testgradution.domain.DoctorRefPeople;
 import com.testgradution.testgradution.domain.Information;
+import com.testgradution.testgradution.domain.People;
+import com.testgradution.testgradution.mapper.PeopleMapper;
+import com.testgradution.testgradution.service.DoctorRefPeopleService;
+import com.testgradution.testgradution.service.DoctorService;
 import com.testgradution.testgradution.service.InformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.relational.core.sql.In;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.Doc;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = {"http://localhost:8080", "null"})
@@ -20,9 +28,18 @@ public class InformationController {
     @Autowired
     public InformationService informationService;
 
+    @Autowired
+    public PeopleMapper peopleMapper;
+
+    @Autowired
+    public DoctorService doctorService;
+
     @RequestMapping(value = "/saveInformation")
-    public Object saveInformation(HttpServletRequest httpServletRequest){
+    public Object saveInformation(HttpServletRequest httpServletRequest,HttpSession session){
         Information information=setInformation(httpServletRequest);
+        information.setUserName((String) session.getAttribute("username"));
+        People people=peopleMapper.selectByUserName((String) session.getAttribute("username"));
+        information.setPeopleId(people.getId());
         JSONObject jsonObject=new JSONObject();
         try{
             int ans=informationService.saveInformation(information);
@@ -71,15 +88,29 @@ public class InformationController {
 
     /**
      * 更新发送状态,点击发送之后更新发送状态为1
+     * 并要将其信息发送给医生
      * @return
      */
-    @RequestMapping("/updateSendStatus")
-    public  JSONObject updateSendStatus(@RequestParam("id") Long id){
+    @RequestMapping(value = "/updateSendStatus",method = RequestMethod.POST)
+    public  JSONObject updateSendStatus(@RequestParam("id") Long id,@RequestParam("peopleId") Long peopleId,@RequestParam("ids") List<Long> ids){
         JSONObject jsonObject=new JSONObject();
         try {
-            if(id==null){
+            if(ids==null){
                 throw new RuntimeException("传入id为空");
             }
+            List<Long> userIds=new ArrayList<>();
+            userIds.add(peopleId);
+            //塞给每个医生,根据传进来的id查询出对应的医生信息
+            List<Doctor> doctorList=doctorService.selectByIds(ids);
+            for (Doctor doctor:doctorList){
+                //给每个医生塞入患者的id，然后根据患者id再进行查询患者信息，进行设置患者信息
+                DoctorRefPeople doctorRefPeople=new DoctorRefPeople();
+                doctorRefPeople.setDoctorId(doctor.getId());
+                doctorRefPeople.setPeopleId(peopleId);
+                doctorService.ref(doctorRefPeople);
+            }
+            //因为患者和医生是多对多的关系，所以建立第三张表进行关联，存放此表主键id，患者id和对应的医生id
+
             informationService.updateSendStatus(id);
             jsonObject.put("code",200);
             jsonObject.put("msg","发送成功");

@@ -4,8 +4,10 @@ import java.util.List;
 
 public class People {
     //用户id
-    private int id;
+    private Long id;
     //用户名称
+    private  String userName;
+    //患者姓名
     private String name;
     //用户所在区域
     private String location;
@@ -21,7 +23,8 @@ public class People {
     private String pic;
     //用户密码
     private String password;
-
+    //患者年龄
+    private  int age;
     //身份证号码
     private  String cardNo;
 
@@ -30,11 +33,11 @@ public class People {
 
     private List<Doctor> doctor;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -132,5 +135,21 @@ public class People {
 
     public void setSource(String source) {
         this.source = source;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }

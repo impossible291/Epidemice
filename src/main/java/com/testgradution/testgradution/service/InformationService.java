@@ -16,4 +16,7 @@ public interface InformationService {
 
     //更新发送状态字段值为发送
     public void updateSendStatus(Long id);
+
+    //查询患者上报的信息
+    public  List<Information> selectDiease(Long id);
 }

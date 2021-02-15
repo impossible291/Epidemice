@@ -27,4 +27,9 @@ public class InformationServiceImpl implements InformationService {
     public void updateSendStatus(Long id) {
         informationMapper.updateSendStatus(id);
     }
+
+    @Override
+    public List<Information> selectDiease(Long id) {
+        return informationMapper.selectDiease(id);
+    }
 }

@@ -36,6 +36,21 @@ public class PeopleController {
     public Object selectAllPeople(){
         return peopleMapper.selectAll();
     }
+
+    @RequestMapping("/selectByUserName")
+    public Object selectByUserName(HttpSession httpSession){
+        JSONObject jsonObject=new JSONObject();
+        String userName= String.valueOf(httpSession.getAttribute("username"));
+        try{
+            People people=peopleMapper.selectByUserName(userName);
+            jsonObject.put("code",200);
+            jsonObject.put("msg","查询成功");
+            jsonObject.put("data",people);
+        }catch (Exception e){
+            throw  new RuntimeException(e);
+        }
+        return  jsonObject;
+    }
     @RequestMapping(value = "/addPeople",method = RequestMethod.POST)
     public Object addPeople(HttpServletRequest request){
         JSONObject jsonObject=new JSONObject();
@@ -59,7 +74,7 @@ public class PeopleController {
 
     /**
      * 根据id查询出对应的用户的信息
-     * @return
+     *      * @return
      */
     @RequestMapping(value = "/selectByPrimaryKey",method = RequestMethod.GET)
     public Object selectByPrimaryKey(HttpServletRequest request){
@@ -309,7 +324,7 @@ public class PeopleController {
 
     public People setPeople(HttpServletRequest request){
         People people=new People();
-        if(request.getParameter("id")!=null){people.setId(Integer.parseInt(request.getParameter("id")));}
+        if(request.getParameter("id")!=null){people.setId(Long.parseLong(request.getParameter("id")));}
         if(request.getParameter("cardNo").length()!=18){
             throw  new RuntimeException("身份证号位数不对，请检查！");
         }else{

@@ -15,17 +15,18 @@
         <result column="pic" jdbcType="VARCHAR" property="pic"/>
         <result column="source" jdbcType="VARCHAR" property="source"/>
         <result column="card_no" jdbcType="VARCHAR" property="cardNo"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
     </resultMap>
 
     <sql id="base_column">
-        id,name,sex,location,advice,phone,risk,pic,password,source,card_no
+        id,name,sex,location,advice,phone,risk,pic,password,source,card_no,user_name
     </sql>
 
 
     <insert id="addPeople" parameterType="com.testgradution.testgradution.domain.People">
-        insert  into gradutation.people(password,sex,location,advice,phone,risk,pic,name,source,card_no)
+        insert  into gradutation.people(password,sex,location,advice,phone,risk,pic,name,source,card_no,user_name)
         values
-        (#{password},#{sex},#{location},#{advice},#{phone},#{risk},#{pic},#{name},#{source},#{cardNo})
+        (#{password},#{sex},#{location},#{advice},#{phone},#{risk},#{pic},#{name},#{source},#{cardNo},#{userName})
     </insert>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap">
@@ -54,7 +55,8 @@
             phone=#{phone},
             pic=#{pic},
             source=#{source},
-            card_no=#{cardNo}
+            card_no=#{cardNo},
+            user_name=#{userName}
         </set>
         where id=#{id}
     </update>
@@ -72,21 +74,42 @@
     </update>
 
     <select id="selectName" resultType="java.lang.String">
-        select  name from  gradutation.people where name=#{name}
+        select  user_name from  gradutation.people where user_name=#{name}
     </select>
 
     <select id="passIstrue" resultType="java.lang.Integer">
-        select count(*) from gradutation.people where name=#{username} AND password=#{password}
+        select count(*) from gradutation.people where user_name=#{username} AND password=#{password}
     </select>
 
     <update id="changePassword" >
         update  gradutation.people set password=#{newPassword}
     </update>
     <select id="selectPassword" resultType="java.lang.String">
-        select password from gradutation.people where name=#{name}
+        select password from gradutation.people where user_name=#{name}
     </select>
 
     <update id="updatePic">
         update  people set pic=#{path} where id=#{id}
     </update>
+
+    <select id="selectPeoples">
+        select <include refid="base_column"/> from gradutation.people where id in
+        <foreach collection="list"  item="item" open="(" separator="," close=")"  >
+            #{item}
+        </foreach>
+    </select>
+
+    <insert id="registerPeople" parameterType="com.testgradution.testgradution.domain.People">
+        insert  into gradutation.people(password,sex,location,advice,phone,risk,pic,name,source,card_no,user_name)
+        values
+        (#{password},#{sex},#{location},#{advice},#{phone},#{risk},#{pic},#{name},#{source},#{cardNo},#{userName})
+    </insert>
+
+    <select id="selectByUserName" resultType="com.testgradution.testgradution.domain.People">
+        select  <include refid="base_column"/> from people where user_name=#{userName}
+    </select>
+
+    <select id="selectDiease" resultType="com.testgradution.testgradution.domain.People">
+        select select people_id FROM doctor_people where doctor_id=#{id})
+    </select>
 </mapper>
